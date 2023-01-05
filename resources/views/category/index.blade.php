@@ -72,9 +72,10 @@
                             Edit
                         </a>
 
+                        {{-- Button Modal --}}
                         <button
                             class="inline-flex items-center py-2 px-4 text-sm font-medium text-gray-900 bg-transparent rounded-r-md border border-gray-900 hover:bg-gray-900 hover:text-white focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-gray-900 focus:text-white dark:border-white dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700"
-                            type="button" data-modal-toggle="popup-modal">
+                            type="button" data-modal-toggle="popup-modal-{{ $category->id }}">
                             <svg aria-hidden="true" class="mr-2 w-4 h-4 fill-current" fill="currentColor"
                                 viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd"
@@ -84,13 +85,14 @@
                             Delete
                         </button>
 
-                        <div id="popup-modal" tabindex="-1"
+                        {{-- Open Modal --}}
+                        <div id="popup-modal-{{ $category->id }}" tabindex="-1"
                             class="fixed top-0 left-0 right-0 z-50 hidden p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
                             <div class="relative w-full h-full max-w-md md:h-auto">
                                 <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
                                     <button type="button"
                                         class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
-                                        data-modal-toggle="popup-modal">
+                                        data-modal-toggle="popup-modal-{{ $category->id }}">
                                         <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
                                             xmlns="http://www.w3.org/2000/svg">
                                             <path fill-rule="evenodd"
@@ -107,23 +109,28 @@
                                                 d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                         </svg>
                                         <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Are
-                                            you sure you want to delete this product?</h3>
+                                            you sure you want to delete this {{ $category->name }}?</h3>
                                         <form action="{{ route('category.destroy', $category->id) }}" method="POST"
                                             class="inline-flex items-center px-5 py-2.5 text-center mr-2">
                                             @method('DELETE')
                                             @csrf
-                                            <button data-modal-toggle="popup-modal" type="submit"
-                                                class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
-                                                Yes, I'm sure
-                                            </button>
+                                            <div id="ModalDelete{{ $category->id }}">
+                                                <button data-modal-toggle="popup-modal-{{ $category->id }}" type="submit"
+                                                    class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
+                                                    Yes, I'm sure delete
+                                                </button>
+                                            </div>
+
                                         </form>
-                                        <button data-modal-toggle="popup-modal" type="button"
+                                        <button data-modal-toggle="popup-modal-{{ $category->id }}" type="button"
                                             class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">No,
                                             cancel</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
+
                     </div>
 
                 </div>

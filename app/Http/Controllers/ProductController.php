@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -15,7 +16,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::all();
+        $products = Product::with('category')->get();
 
         return view('product.index', [
             'products' => $products
@@ -29,7 +30,11 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('product.create');
+        $data = Category::all();
+
+        return view('product.create', [
+            'categories' => $data
+        ]);
     }
 
     /**
@@ -43,7 +48,8 @@ class ProductController extends Controller
         $data = $request->validate([
             'name' => 'required|string',
             'price' => 'required|integer',
-            'photo' => 'image|file'
+            'photo' => 'image|file',
+            'category_id' => 'string'
         ]);
 
         if ($request->hasFile('photo')) {

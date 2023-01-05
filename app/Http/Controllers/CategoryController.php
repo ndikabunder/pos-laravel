@@ -14,7 +14,11 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $data = Category::all();
+
+        return view('category.index', [
+            'categories' => $data
+        ]);
     }
 
     /**
@@ -24,7 +28,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('category.create');
     }
 
     /**
@@ -35,7 +39,15 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'name' => 'required|string|regex:/^[a-zA-Z ]+$/'
+        ]);
+
+        Category::create($data);
+
+        return redirect()
+            ->route('category.index')
+            ->with('success', 'Success create category');
     }
 
     /**
@@ -46,7 +58,6 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        //
     }
 
     /**
@@ -57,7 +68,9 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        //
+        return view('category.edit', [
+            'category' => $category
+        ]);
     }
 
     /**
@@ -69,7 +82,15 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+        $data = $request->validate([
+            'name' => 'required|string|regex:/^[a-zA-Z ]+$/'
+        ]);
+
+        $category->update($data);
+
+        return redirect()
+            ->route('category.index')
+            ->with('update', 'Success edit category');
     }
 
     /**
@@ -80,6 +101,10 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        $category->delete();
+
+        return redirect()
+            ->route('category.index')
+            ->with('delete', 'Success edit category');
     }
 }

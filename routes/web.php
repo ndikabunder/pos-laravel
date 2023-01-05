@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
@@ -26,3 +27,4 @@ Route::post('/register', [LoginController::class, 'storeUser'])->name('register'
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::resource('product', ProductController::class)->middleware('auth');
+Route::resource('category', CategoryController::class)->middleware('auth');
